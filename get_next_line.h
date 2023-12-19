@@ -21,9 +21,13 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_read(int fd, char *stash);
+char	*ft_read2(int fd, char *stash, char *copy, int nbyte_read);
+char	*ft_extract(char *tmp);
+char	*ft_stash(char *str);
+char	*ft_strjoin(char *s1, const char *s2);
 size_t	ft_strlen(const char *str);
-char	*ft_strchr(char *str, int c);
+char	*ft_strchr(const char *str, int c);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
 
 #endif

@@ -11,29 +11,20 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
-#include <stdlib.h>
 
-size_t	ft_strlen(const char *str);
-
-char	*ft_strchr(char *str, int c);
-
-size_t	ft_strlcat(char *dest, const char *src, size_t size);
-
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, const char *s2)
 {
 	char	*copy;
 	size_t	i;
 	size_t	j;
 
-	i = ft_strlen(s1) + ft_strlen(s2) + 1;
+	i = 0;
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	copy = malloc(i * sizeof(char));
+	copy = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!copy)
 		return (NULL);
-	i = 0;
 	while (s1[i])
 	{
 		copy[i] = s1[i];
@@ -45,6 +36,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	copy[i + j] = '\0';
+	free(s1);
 	return (copy);
 }
 
@@ -53,27 +45,27 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	if (!str)
-		return (0);
 	while (str[i])
 		i++;
 	return (i);
 }
 
-char	*ft_strchr(char *str, int c)
+char	*ft_strchr(const char *str, int c)
 {
-	unsigned int	i;
+	char	cast_c;
+	int		i;
 
+	cast_c = (char)c;
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == (char)c)
-			return ((char *)str + i);
+		if (str[i] == cast_c)
+			return ((char *)&str[i]);
 		i++;
 	}
-	if (str[i] == (char)c)
-		return ((char *)str + i);
-	return (NULL);
+	if (str[i] == cast_c)
+		return ((char *)&str[i]);
+	return (0);
 }
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size)

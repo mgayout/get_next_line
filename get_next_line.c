@@ -11,16 +11,8 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <stdio.h>
-
-char	*ft_read(int fd, char *stash);
-
-char	*ft_extract(char *tmp);
-
-char	*ft_stash(char *str);
+//#include <fcntl.h>
+//#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
@@ -30,7 +22,6 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	//printf("%s", stash);
 	tmp = ft_read(fd, stash);
 	if (!tmp)
 		return (NULL);
@@ -43,7 +34,7 @@ char	*get_next_line(int fd)
 	tmp = ft_stash(tmp);
 	if (!tmp)
 	{
-		free(line);
+		free(tmp);
 		return (NULL);
 	}
 	stash[0] = '\0';
@@ -58,24 +49,31 @@ char	*ft_read(int fd, char *stash)
 	int		nbyte_read;
 
 	nbyte_read = 1;
-	copy = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	copy = malloc(ft_strlen(stash) * sizeof(char) + 1);
 	if (!copy)
 		return (NULL);
 	copy[0] = '\0';
 	ft_strlcat(copy, stash, ft_strlen(stash) + 1);
 	if (!copy)
 		return (NULL);
+	copy = ft_read2(fd, stash, copy, nbyte_read);
+	return (copy);
+}
+
+char	*ft_read2(int fd, char *stash, char *copy, int nbyte_read)
+{
 	while (!ft_strchr(copy, '\n') && nbyte_read != 0)
 	{
 		nbyte_read = read(fd, stash, BUFFER_SIZE);
 		if (nbyte_read == -1)
 		{
+			stash[0] = '\0';
 			free(copy);
 			return (NULL);
 		}
 		stash[nbyte_read] = '\0';
 		copy = ft_strjoin(copy, stash);
-		if (!copy)
+		if (!copy || ft_strlen(copy) == 0)
 		{
 			free(copy);
 			return (NULL);
@@ -94,7 +92,7 @@ char	*ft_extract(char *str)
 		return (str);
 	while (str[i] && str[i] != '\n')
 		i++;
-	line = malloc(sizeof(char) * i + 1);
+	line = malloc((sizeof(char) * i) + 2);
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -118,26 +116,24 @@ char	*ft_stash(char *str)
 	int		i;
 	int		j;
 
-	i = ft_strlen(str);
-	j = 0;
+	i = 0;
 	if (!str)
 		return (NULL);
-	while (str[i] != '\n')
-	{
-		i--;
-		j++;
-	}
-	stash = malloc(j * sizeof(char));
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		i++;
+	stash = malloc(((ft_strlen(str) - i) + 1) * sizeof(char));
 	if (!stash)
 		return (NULL);
 	j = 0;
 	while (str[i])
-		stash[j++] = str[++i];
+		stash[j++] = str[i++];
 	stash[j] = '\0';
 	free(str);
 	return (stash);
 }
-
+/*
 int	main(void)
 {
 	int		fd;
@@ -176,3 +172,4 @@ int	main(void)
 	}
 	return (0);
 }
+*/
