@@ -34,7 +34,7 @@ char	*get_next_line(int fd)
 	tmp = ft_stash(tmp);
 	if (!tmp)
 	{
-		free(tmp);
+		free(line);
 		return (NULL);
 	}
 	stash[0] = '\0';
@@ -137,39 +137,18 @@ char	*ft_stash(char *str)
 int	main(void)
 {
 	int		fd;
-	FILE	*fp;
 	char	*line;
-	char	*line2;
-	size_t	len = 0;
-	ssize_t	read;
-	int		i;
 
-	i = 1;
-	if (i == 1)
-	{
-		fd = open("test.txt", O_RDONLY);
-		if (fd == -1)
-			return (0);
-		while ((line = get_next_line(fd)) != NULL)
-			printf("<> %s", line);
-		printf("\n");
-		if (line)
-			free(line);
-		close(fd);
+	fd = open("test.txt", O_RDONLY);
+	if (fd == -1)
 		return (0);
-	}
-	else
+	while ((line = get_next_line(fd)) != NULL)
 	{
-		fp = fopen("test.txt", "r");
-		if (fp == NULL)
-			exit(EXIT_FAILURE);
-		while ((read = getline(&line2, &len, fp)) != -1)
-			printf("<> %s", line2);
-		printf("\n");
-		if (line2)
-			free(line2);
-		exit(EXIT_SUCCESS);
+		printf("<> %s", line);
+		free(line);
 	}
+	printf("\n", 1);
+	close(fd);
 	return (0);
 }
 */

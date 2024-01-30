@@ -21,7 +21,7 @@ OBJ		=	$(SRC:.c=.o)
 
 RM		=	rm -rf
 
-CC		=	GCC
+CC		=	gcc
 
 CFLAGS	=	-Wall -Wextra -Werror
 
