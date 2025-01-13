@@ -11,31 +11,31 @@
 # **************************************************************************** #
 
 NAME	=	get_next_line.a
+FLAG			=	-Wall -Wextra -Werror
 
-LIB		=	ar rcs
+SRCDIR	= src
+OBJDIR	= obj
+HEADIR	= include
 
-SRC		=	get_next_line.c \
-			get_next_line_utils.c
+SRC		= $(shell find $(SRCDIR) -name '*.c')
+OBJ		= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
+HEADER	= $(shell find $(HEADIR) -name '*.h')
 
-OBJ		=	$(SRC:.c=.o)
+all:			$(NAME)
 
-RM		=	rm -rf
+$(NAME):		$(OBJ) $(HEADER) 
+					@ar -rc $(NAME) $(OBJ)
 
-CC		=	gcc
-
-CFLAGS	=	-Wall -Wextra -Werror
-
-all: $(NAME)
-
-$(NAME): $(OBJ)
-			$(LIB) $(NAME) $(OBJ)
+$(OBJDIR)/%.o : $(SRCDIR)/%.c $(HEADER)
+					@mkdir -p $(dir $@)
+					@gcc $(FLAG) -c $< -o $@
 
 clean:
-			$(RM) $(OBJ)
+					@rm -rf $(OBJDIR)
 
-fclean: clean
-			$(RM) $(NAME)
+fclean: 		clean
+					@rm -rf $(NAME)
 
-re: fclean all
+re:				fclean all
 
-.PHONY: all, clean, fclean, re
+.PHONY: 		all clean fclean re
