@@ -12,7 +12,7 @@
 
 #include "../include/get_next_line.h"
 
-char	*ft_strjoin(char *s1, const char *s2)
+char	*ft_strjoingnl(char *s1, const char *s2)
 {
 	char	*copy;
 	size_t	i;
@@ -22,7 +22,7 @@ char	*ft_strjoin(char *s1, const char *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	copy = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	copy = malloc(ft_strlengnl(s1) + ft_strlengnl(s2) + 1);
 	if (!copy)
 		return (NULL);
 	while (s1[i])
@@ -40,7 +40,7 @@ char	*ft_strjoin(char *s1, const char *s2)
 	return (copy);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlengnl(const char *str)
 {
 	size_t	i;
 
@@ -50,7 +50,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strchr(const char *str, int c)
+char	*ft_strchrgnl(const char *str, int c)
 {
 	char	cast_c;
 	int		i;
@@ -68,7 +68,7 @@ char	*ft_strchr(const char *str, int c)
 	return (0);
 }
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+size_t	ft_strlcatgnl(char *dest, const char *src, size_t size)
 {
 	size_t	i;
 	size_t	j;
@@ -84,5 +84,5 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 	}
 	if (i < size)
 		dest[i + j] = '\0';
-	return (i + ft_strlen(src));
+	return (i + ft_strlengnl(src));
 }

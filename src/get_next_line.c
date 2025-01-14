@@ -38,7 +38,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	stash[0] = '\0';
-	ft_strlcat(stash, tmp, ft_strlen(tmp) + 1);
+	ft_strlcatgnl(stash, tmp, ft_strlengnl(tmp) + 1);
 	free(tmp);
 	return (line);
 }
@@ -49,11 +49,11 @@ char	*ft_read(int fd, char *stash)
 	int		nbyte_read;
 
 	nbyte_read = 1;
-	copy = malloc(ft_strlen(stash) * sizeof(char) + 1);
+	copy = malloc(ft_strlengnl(stash) * sizeof(char) + 1);
 	if (!copy)
 		return (NULL);
 	copy[0] = '\0';
-	ft_strlcat(copy, stash, ft_strlen(stash) + 1);
+	ft_strlcatgnl(copy, stash, ft_strlengnl(stash) + 1);
 	if (!copy)
 		return (NULL);
 	copy = ft_read2(fd, stash, copy, nbyte_read);
@@ -62,7 +62,7 @@ char	*ft_read(int fd, char *stash)
 
 char	*ft_read2(int fd, char *stash, char *copy, int nbyte_read)
 {
-	while (!ft_strchr(copy, '\n') && nbyte_read != 0)
+	while (!ft_strchrgnl(copy, '\n') && nbyte_read != 0)
 	{
 		nbyte_read = read(fd, stash, BUFFER_SIZE);
 		if (nbyte_read == -1)
@@ -72,8 +72,8 @@ char	*ft_read2(int fd, char *stash, char *copy, int nbyte_read)
 			return (NULL);
 		}
 		stash[nbyte_read] = '\0';
-		copy = ft_strjoin(copy, stash);
-		if (!copy || ft_strlen(copy) == 0)
+		copy = ft_strjoingnl(copy, stash);
+		if (!copy || ft_strlengnl(copy) == 0)
 		{
 			free(copy);
 			return (NULL);
@@ -123,7 +123,7 @@ char	*ft_stash(char *str)
 		i++;
 	if (str[i] == '\n')
 		i++;
-	stash = malloc(((ft_strlen(str) - i) + 1) * sizeof(char));
+	stash = malloc(((ft_strlengnl(str) - i) + 1) * sizeof(char));
 	if (!stash)
 		return (NULL);
 	j = 0;

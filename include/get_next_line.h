@@ -25,9 +25,9 @@ char	*ft_read(int fd, char *stash);
 char	*ft_read2(int fd, char *stash, char *copy, int nbyte_read);
 char	*ft_extract(char *tmp);
 char	*ft_stash(char *str);
-char	*ft_strjoin(char *s1, const char *s2);
-size_t	ft_strlen(const char *str);
-char	*ft_strchr(const char *str, int c);
-size_t	ft_strlcat(char *dest, const char *src, size_t size);
+char	*ft_strjoingnl(char *s1, const char *s2);
+size_t	ft_strlengnl(const char *str);
+char	*ft_strchrgnl(const char *str, int c);
+size_t	ft_strlcatgnl(char *dest, const char *src, size_t size);
 
 #endif
