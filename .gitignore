@@ -1,0 +1,13 @@
+# IDE / editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Compiled objects / libraries
+*.o
+*.a
+
+# Downloaded archives
+*.tar.gz
